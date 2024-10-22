@@ -21,13 +21,10 @@ class Dot(
     private val startPosition: Position = position
 
 
-
     companion object {
 
 
-
-
-        fun generatePosition( coords: Coord3D): Position {
+        fun generatePosition(coords: Coord3D): Position {
             return Position(
                 coord3D = coords,
                 speed3D = Speed3D(0f, 0f, 0f),
@@ -60,19 +57,26 @@ class Dot(
     }
 
 
-     override fun shouldRemove(): Boolean{
+    override fun shouldRemove(): Boolean {
 
         return false
 
     }
 
-    fun color():Color{
-        val currentDistance = calculateDistance(position.coord3D.x, position.coord3D.y, startPosition.coord3D.x, startPosition.coord3D.y)
+    fun color(): Color {
+        val currentDistance = calculateDistance(
+            position.coord3D.x,
+            position.coord3D.y,
+            startPosition.coord3D.x,
+            startPosition.coord3D.y
+        )
 
 
-            return colorSet.end
+        return colorSet.end
 
     }
+
+    override fun name() = "Dot"
 
 
 }

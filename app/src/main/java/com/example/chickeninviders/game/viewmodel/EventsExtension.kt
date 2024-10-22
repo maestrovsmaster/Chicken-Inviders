@@ -8,9 +8,9 @@ fun MainViewModel.spawnParcel(){
 
     val parcelChanse = Random.nextInt(6)
 
-    if(parcelChanse <= 5) {//2
+    if(parcelChanse == 2) {//2
 
-        val shotChanse = Random.nextInt(123)
+        val shotChanse = Random.nextInt(523)
         if (shotChanse == 10) {
 
             val parc = AmmoParcel()

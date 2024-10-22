@@ -28,7 +28,7 @@ abstract class CelestialBody(override var position: Position, override var size:
     }
 
 
-
+    override fun name() = "CelestialBody"
 
 }
 

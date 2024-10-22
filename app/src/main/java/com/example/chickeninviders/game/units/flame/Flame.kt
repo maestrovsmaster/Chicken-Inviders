@@ -122,6 +122,6 @@ class Flame(
         return sparks.size == 0
     }
 
-
+    override fun name() = "Flame"
 
 }

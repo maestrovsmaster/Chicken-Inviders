@@ -1,5 +1,6 @@
 package com.example.chickeninviders.game.gameplay.collision
 
+import android.util.Log
 import com.example.chickeninviders.game.physic.PhysicEntity
 import com.example.chickeninviders.game.units.bullets.ChickenBullet
 import com.example.chickeninviders.game.units.bullets.PlayersBullet
@@ -45,8 +46,8 @@ fun checkFriendCollision(pair: Pair<PhysicEntity, PhysicEntity>): CollisionEvent
 fun checkEnemyCollision(pair: Pair<PhysicEntity, PhysicEntity>): CollisionEvent? {
     if (pair.first is PlayerShip && pair.second is EvilChicken
         || pair.second is PlayerShip && pair.first is EvilChicken
-        || pair.first is EvilChicken && pair.second is ChickenBullet
-        || pair.second is EvilChicken && pair.first is ChickenBullet) {
+        || pair.first is PlayerShip && pair.second is ChickenBullet
+        || pair.second is PlayerShip && pair.first is ChickenBullet) {
         return CollisionEvent(
             pair.first, pair.second, CollisionType.Collision
         )

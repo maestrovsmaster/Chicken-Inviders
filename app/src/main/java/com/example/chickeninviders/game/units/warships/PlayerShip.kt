@@ -2,7 +2,8 @@ package com.example.chickeninviders.game.units.warships
 
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.ImageBitmap
-import com.example.chickeninviders.game.graphics.GameFrame.isInFrameWidth
+import com.example.chickeninviders.game.graphics.GameFrame.nearBorder
+import com.example.chickeninviders.game.graphics.ScreenBorder
 import com.example.chickeninviders.game.physic.MovementImpuls
 import com.example.chickeninviders.game.physic.MovementVector
 import com.example.chickeninviders.game.units.bullets.Bullet
@@ -79,12 +80,15 @@ class PlayerShip(
 
     override fun update() {
 
-        val isInFrame = isInFrameWidth(position.coord3D.x, size)
-        if (!isInFrame) {
-            position =
-                position.copy(speed3D = position.speed3D.copy(vx = -1f * position.speed3D.vx))
+        val nearBorder = nearBorder(position.coord3D.x, size)
+
+        if(nearBorder == ScreenBorder.LEFT){
+            position =     position.copy(speed3D = position.speed3D.copy(vx = 0.9f))
         }
-        this.move();
+        if(nearBorder == ScreenBorder.RIGHT){
+            position =     position.copy(speed3D = position.speed3D.copy(vx = -0.9f))
+        }
+        this.move()
         flame.update()
 
     }

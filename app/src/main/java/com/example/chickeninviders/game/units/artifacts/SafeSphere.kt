@@ -133,5 +133,7 @@ class SafeSphere(
         return dots.size <= 10
     }
 
+    override fun name() = "SafeSphere"
+
 
 }

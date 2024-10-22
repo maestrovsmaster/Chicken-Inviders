@@ -10,5 +10,5 @@ class ChickenBullet(coords: Coord3D) : Bullet(
     MovementVector.BACK, Size(50f, 50f), SpawnScript.eggBitmap, speed = 7f
 ) {
 
-
+    override fun name() = "ChickenBullet"
 }

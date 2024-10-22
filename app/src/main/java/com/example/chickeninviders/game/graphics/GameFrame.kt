@@ -2,8 +2,6 @@ package com.example.chickeninviders.game.graphics
 
 import android.content.Context
 import android.util.DisplayMetrics
-import android.util.Log
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 
 
@@ -44,8 +42,8 @@ object GameFrame {
         return (myX > 0 && myX + size.width < widthPx && myY > 0 && myY + size.height < heightPx )
     }
 
-    fun isInFrameWidth(myX: Float, size: Size): Boolean {
-        val koef = widthPx * 0.2
+    fun nearBorder(myX: Float, size: Size): ScreenBorder? {
+        val koef = 0//widthPx * 0.2
 
         val minX = 0 - koef
         val maxX = widthPx + koef
@@ -54,13 +52,21 @@ object GameFrame {
 
         val myPosMax = myX + myW
 
-        val isInFrame = myX >= minX && myPosMax <= maxX
+       // val isInFrame = myX >= minX && myPosMax <= maxX
+
+        if(myX < minX){ return ScreenBorder.LEFT}
+        if(myPosMax > maxX){ return ScreenBorder.RIGHT}
 
 
-
-        return isInFrame
+        return null
     }
 
+}
 
+enum class ScreenBorder{
+    LEFT,
+    RIGHT,
+    TOP,
+    BOTTOM
 
 }

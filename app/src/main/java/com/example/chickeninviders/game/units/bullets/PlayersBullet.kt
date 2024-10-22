@@ -10,5 +10,5 @@ class PlayersBullet(coords: Coord3D) : Bullet(
     MovementVector.FORWARD, Size(50f,50f), SpawnScript.bulletBitmap, speed = 16f
 ) {
 
-
+    override fun name() = "PlayersBullet"
 }

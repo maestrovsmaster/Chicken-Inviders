@@ -64,8 +64,8 @@ fun GameWidget(mainViewModel: MainViewModel){
   //  mainViewModel.addSpaceObject(flame)
 
 
-    val sphere = SpawnScript.initTestSphere()
-    mainViewModel.addSpaceObject(sphere)
+   // val sphere = SpawnScript.initTestSphere()
+   // mainViewModel.addSpaceObject(sphere)
 
     mainViewModel.startTimer()
 

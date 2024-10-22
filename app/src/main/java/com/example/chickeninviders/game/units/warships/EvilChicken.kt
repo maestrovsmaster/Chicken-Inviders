@@ -2,12 +2,12 @@ package com.example.chickeninviders.game.units.warships
 
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.ImageBitmap
-import com.example.chickeninviders.game.gameplay.SpawnScript
+import com.example.chickeninviders.CHICKEN_SPEED
+import com.example.chickeninviders.CHICKEN_WEAPON_RELOAD_TIME
 import com.example.chickeninviders.game.graphics.GameFrame
 import com.example.chickeninviders.game.graphics.GameFrame.heightPx
 import com.example.chickeninviders.game.graphics.GameFrame.widthPx
 import com.example.chickeninviders.game.graphics.transformPerspective
-import com.example.chickeninviders.game.physic.MovementVector
 import com.example.chickeninviders.game.units.bullets.Bullet
 import com.example.chickeninviders.game.units.bullets.ChickenBullet
 import com.example.chickeninviders.game.utils.Acceleration3D
@@ -35,7 +35,7 @@ class EvilChicken(
     companion object{
         fun initRandomPosition(): Position{
             val coord3D = initRandomCoordinats(-50f)
-            val speed3D = Speed3D(0f,1.4f,0f)
+            val speed3D = Speed3D(0f,CHICKEN_SPEED,0f)
             val ax = Acceleration3D(1.0f,1.0f,0f)
             return Position(coord3D,speed3D,ax)
         }
@@ -78,13 +78,39 @@ class EvilChicken(
         return ChickenBullet(coord3D)
     }
 
-    fun checkRandomShot(): Bullet? {
+    /*fun checkRandomShot(): Bullet? {
         val shotChanse = Random.nextInt(250)
         if(shotChanse == 10){
             return createBullet()
         }
         return null
+    }*/
+
+    var lastShotTime = System.currentTimeMillis()
+    val minInterval = CHICKEN_WEAPON_RELOAD_TIME
+
+    fun checkRandomShot(): Bullet? {
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - lastShotTime > minInterval) {
+            val shotChance = Random.nextInt(250)
+            if (shotChance == 10) {
+                lastShotTime = currentTime
+                return createBullet()
+            }
+        }
+        return null
     }
+
+    /*var shotsUntilNextBullet = Random.nextInt(100, 300)
+
+    fun checkRandomShot(): Bullet? {
+        shotsUntilNextBullet--
+        if (shotsUntilNextBullet <= 0) {
+            shotsUntilNextBullet = Random.nextInt(100, 300)
+            return createBullet()
+        }
+        return null
+    }*/
 
 
 

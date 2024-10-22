@@ -86,7 +86,7 @@ abstract class ArtificialObject(
         return initBangFlame(bangType)
     }
 
-
+    override fun name() = "ArtificialObject"
 
 
 }

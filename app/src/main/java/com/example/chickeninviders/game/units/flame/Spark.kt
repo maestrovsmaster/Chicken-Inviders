@@ -153,5 +153,6 @@ class Spark(
         }
     }
 
+    override fun name() = "Spark"
 
 }

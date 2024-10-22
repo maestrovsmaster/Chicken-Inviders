@@ -73,6 +73,7 @@ abstract class Bullet(
     }
 
 
+    override fun name() = "Bullet"
 
 
 }

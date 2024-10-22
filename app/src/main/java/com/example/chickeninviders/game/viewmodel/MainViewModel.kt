@@ -3,10 +3,14 @@ package com.example.chickeninviders.game.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.chickeninviders.GLOBAL_TIMER_DELAY
+import com.example.chickeninviders.MAX_LIFES
+import com.example.chickeninviders.PLAYER_WEAPON_RELOAD_TIME
 import com.example.chickeninviders.game.camera.MainCamera
 import com.example.chickeninviders.game.gameplay.TimerHandler
 import com.example.chickeninviders.game.physic.PhysicEntity
 import com.example.chickeninviders.game.utils.Position
+import kotlin.random.Random
 
 class MainViewModel : ViewModel() {
 
@@ -16,7 +20,7 @@ class MainViewModel : ViewModel() {
     private var currentTime = 0L
 
     private val timerHandler = TimerHandler(
-        updateInterval = 7L,
+        updateInterval = GLOBAL_TIMER_DELAY, //7L,
         onTick = {
             updateGameState()
             currentTime += 1
@@ -47,7 +51,7 @@ class MainViewModel : ViewModel() {
     internal val _ammo = MutableLiveData<Int>(10)
     val ammo: LiveData<Int> = _ammo
 
-    internal val _lifes = MutableLiveData<Int>(3)
+    internal val _lifes = MutableLiveData<Int>(MAX_LIFES)
     val lifes: LiveData<Int> = _lifes
 
 
@@ -59,19 +63,31 @@ class MainViewModel : ViewModel() {
 
     public fun clickLeft() {
         _clickLeft.postValue(true)
-        _camera.value?.turnLeft()
+      //  _camera.value?.turnLeft()
         moveMySheepLeft()
     }
 
 
     public fun clickRight() {
         _clickRight.postValue(true)
-        _camera.value?.turnRight()
+      //  _camera.value?.turnRight()
         moveMySheepRight()
     }
 
+    var lastShotTime = System.currentTimeMillis()
+    val minInterval = PLAYER_WEAPON_RELOAD_TIME
+
     public fun clickFire() {
 
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - lastShotTime > minInterval) {
+            lastShotTime = currentTime
+            prepareShot()
+        }
+
+    }
+
+    private fun prepareShot() {
         var newValue = _ammo.value!! - 1
         if (newValue < 0) {
             newValue = 0

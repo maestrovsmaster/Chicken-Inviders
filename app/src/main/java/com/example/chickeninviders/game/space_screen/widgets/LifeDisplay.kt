@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
+import com.example.chickeninviders.MAX_LIFES
 import com.example.chickeninviders.R
 
 @Composable
@@ -32,7 +33,7 @@ fun LifeDisplay(livesLiveData: LiveData<Int>) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {
-        for (i in 1..3) {
+        for (i in 1..MAX_LIFES) {
             Icon(
                 imageVector = if (i <= lives) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                 contentDescription = "Heart",

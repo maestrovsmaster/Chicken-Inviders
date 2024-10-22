@@ -50,9 +50,9 @@ fun GameScreen(mainViewModel: MainViewModel) {
 
             TooltipWidget()
 
-            GameOverDialog(mainViewModel.lifes,{
+            /*GameOverDialog(mainViewModel.lifes,{
                 System.exit(0)
-            })
+            })*/
 
         }
 

@@ -40,4 +40,6 @@ abstract  class PhysicEntity(
 
     open fun shouldRecreate() = false
 
+    open fun name() = "PhysicEntity"
+
 }

@@ -115,6 +115,6 @@ class Bang(
         return sparks.size <= 10
     }
 
-
+    override fun name() = "Bang"
 
 }

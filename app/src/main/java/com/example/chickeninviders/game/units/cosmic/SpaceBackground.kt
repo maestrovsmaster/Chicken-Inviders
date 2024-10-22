@@ -41,7 +41,7 @@ GameFrame.widthPx + 200f
     }
 
 
-
+    override fun name() = "SpaceBackground"
 
 
 }

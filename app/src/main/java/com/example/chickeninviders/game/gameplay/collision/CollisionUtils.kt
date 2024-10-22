@@ -1,3 +1,4 @@
+import android.util.Log
 import com.example.chickeninviders.game.gameplay.collision.CollisionEvent
 import com.example.chickeninviders.game.gameplay.collision.CollisionType
 import com.example.chickeninviders.game.gameplay.collision.checkAccidentCollision
