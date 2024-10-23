@@ -54,9 +54,9 @@ fun GameScreen(mainViewModel: MainViewModel) {
                     mainViewModel.activateShield()
                 })
 
-            /*GameOverDialog(mainViewModel.lifes,{
+            GameOverDialog(mainViewModel.lifes,{
                 System.exit(0)
-            })*/
+            })
 
 
 
