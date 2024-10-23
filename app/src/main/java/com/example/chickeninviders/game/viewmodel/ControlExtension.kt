@@ -24,10 +24,11 @@ internal fun MainViewModel.moveMySheepLeft() {
     }
 }
 
-internal fun MainViewModel.enableGuardSphereForMySheep() {
+internal fun MainViewModel.enableGuardSphereForMySheep(): Boolean {
     getMyStarShip()?.let { myStarship ->
-        myStarship.enableGuardSphere()
+       return myStarship.enableGuardSphere()
     }
+    return false
 }
 
 internal fun MainViewModel.disableGuardSphereForMySheep() {

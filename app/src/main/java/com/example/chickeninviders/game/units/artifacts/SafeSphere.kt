@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import com.example.chickeninviders.GLOBAL_TIMER_DELAY
+import com.example.chickeninviders.SHIELD_ACTIVE_TIME
 import com.example.chickeninviders.game.graphics.transformPerspective
 import com.example.chickeninviders.game.physic.PhysicEntity
 import com.example.chickeninviders.game.units.flame.Dot
@@ -20,19 +22,20 @@ class SafeSphere(
     var radius: Float = 130f,
     var capacity: Int = 20,
     var speed: Speed = Speed.NORMAL,
-    var colorSet: SparkColorSet = SparkColorSet(Color.White, Color.Yellow, Color.Red)
+    var colorSet: SparkColorSet = SparkColorSet(Color.White, Color.Yellow, Color.Red),
+    val totalTime: Long = SHIELD_ACTIVE_TIME,
+    val onCompeted: () -> Unit = {},
 
 ) : PhysicEntity(position, Size(1f, 1f)) {
 
 
     data class SphereDot(var r: Double, var fi: Double, var color: Color = Color.White)
 
-
     var dots: MutableList<SphereDot> = generateDotsCloud(capacity, radius)
 
 
     companion object {
-
+        val nCount: Int = 45
 
         fun generateDotsCloud(
             capacity: Int, radius: Float,
@@ -40,23 +43,15 @@ class SafeSphere(
 
             val list = mutableListOf<SphereDot>()
 
-            // val countFi = 100
-            // val stepFi = 360 / countFi
 
+            for (i in 0..nCount) {
 
-            // 360 = 100
-            //  fi = x
-            //  x = fi*100/360
-
-
-            for (i in 0..45) {
-
-                val fi = i * 8.0
+                val fi = i * 360 / nCount
 
                 val prc = fi * 100 / 360
 
                 Log.d("SuperSphere", "procent = $prc")
-                val colorRed =  prc / 100f
+                val colorRed = prc / 100f
                 val colorGreen = 1 - colorRed
                 val colorBlue = 1f
 
@@ -77,28 +72,77 @@ class SafeSphere(
 
     }
 
+    val L: Long = GLOBAL_TIMER_DELAY
+
+    val totalFrames = (totalTime / L).toInt() // Загальна кількість кадрів
+
+    val dotsPerFrame: Float = nCount.toFloat() / totalFrames
+
+    var decreaseIndex = 0
+
 
     override fun draw(drawScope: DrawScope, cameraOffset: Coord3D) {
 
         Log.d("PlayerShip", " SafeSphere draw")
 
         val transformedCoords = this.transformOffset(cameraOffset)
-        val coord2D =  transformPerspective(transformedCoords)
+        val coord2D = transformPerspective(transformedCoords)
+
+
+        //Regular dots
         dots.map { dot ->
-             val (x, y) = polarToCartesian(radius = dot.r, dot.fi.degreesToRadians())
-            drawScope.drawCircle( dot.color,
-                radius = 3.0f, center = androidx.compose.ui.geometry.Offset(coord2D.x+x.toFloat(), coord2D.y+y.toFloat())
+
+            val (x2, y2) = polarToCartesian(radius = dot.r - 10, dot.fi.degreesToRadians())
+            drawScope.drawCircle(
+                dot.color,
+                radius = 2.0f,
+                center = androidx.compose.ui.geometry.Offset(
+                    coord2D.x + x2.toFloat(),
+                    coord2D.y + y2.toFloat()
+                )
             )
 
-            val (x2, y2) = polarToCartesian(radius = dot.r-10, dot.fi.degreesToRadians())
-            drawScope.drawCircle( dot.color,
-                radius = 2.0f, center = androidx.compose.ui.geometry.Offset(coord2D.x+x2.toFloat(), coord2D.y+y2.toFloat())
+
+            val (x3, y3) = polarToCartesian(radius = dot.r - 20, dot.fi.degreesToRadians())
+            drawScope.drawCircle(
+                dot.color,
+                radius = 1.5f,
+                center = androidx.compose.ui.geometry.Offset(
+                    coord2D.x + x3.toFloat(),
+                    coord2D.y + y3.toFloat()
+                )
             )
 
-            val (x3, y3) = polarToCartesian(radius = dot.r-20, dot.fi.degreesToRadians())
-            drawScope.drawCircle( dot.color,
-                radius = 1.5f, center = androidx.compose.ui.geometry.Offset(coord2D.x+x3.toFloat(), coord2D.y+y3.toFloat())
+        }
+
+        //Progress dots
+        // Рахуємо скільки точок повинно зникнути до цього моменту
+        val toIndex = maxOf(nCount - (decreaseIndex * dotsPerFrame).toInt() - 1, 0)
+
+        for (i in 0..toIndex) {
+            val dot = dots[i]
+
+            val (x, y) = polarToCartesian(radius = dot.r, dot.fi.degreesToRadians())
+
+            drawScope.drawCircle(
+                dot.color,
+                radius = 3.0f,
+                center = androidx.compose.ui.geometry.Offset(
+                    coord2D.x + x.toFloat(),
+                    coord2D.y + y.toFloat()
+                )
             )
+
+
+
+
+
+        }
+
+        decreaseIndex++
+
+        if (decreaseIndex >= totalFrames) {
+            onCompeted()
         }
 
 
@@ -109,7 +153,7 @@ class SafeSphere(
 
         dots.map { dot ->
             var newFi = dot.fi + 1
-            if(newFi > 360) newFi -=360
+            if (newFi > 360) newFi -= 360
             dot.fi = newFi
         }
 

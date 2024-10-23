@@ -8,11 +8,11 @@ import com.example.chickeninviders.SHIELD_ACTIVE_TIME
 public fun MainViewModel.activateShield() {
     val newShields = _shields.value!! - 1
     if(newShields >= 0) {
-        _shields.postValue(newShields)
-        enableGuardSphereForMySheep()
-        Handler(Looper.getMainLooper()).postDelayed({
-            disableGuardSphereForMySheep()
-        }, SHIELD_ACTIVE_TIME)
+
+        val result = enableGuardSphereForMySheep()
+        if(result){
+            _shields.postValue(newShields)
+        }
     }
 }
 

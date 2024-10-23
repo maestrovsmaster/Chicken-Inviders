@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.chickeninviders.GLOBAL_TIMER_DELAY
+import com.example.chickeninviders.INITIAL_AMMO_COUNT
+import com.example.chickeninviders.INITIAL_SHIELDS
 import com.example.chickeninviders.MAX_LIFES
 import com.example.chickeninviders.MAX_SHIELDS
 import com.example.chickeninviders.PLAYER_WEAPON_RELOAD_TIME
@@ -52,13 +54,13 @@ class MainViewModel : ViewModel() {
     val camera: LiveData<MainCamera> = _camera
 
 
-    internal val _ammo = MutableLiveData<Int>(10)
+    internal val _ammo = MutableLiveData<Int>(INITIAL_AMMO_COUNT)
     val ammo: LiveData<Int> = _ammo
 
     internal val _lifes = MutableLiveData<Int>(MAX_LIFES)
     val lifes: LiveData<Int> = _lifes
 
-    internal val _shields = MutableLiveData<Int>(1)
+    internal val _shields = MutableLiveData<Int>(INITIAL_SHIELDS)
     val shields: LiveData<Int> = _shields
 
 

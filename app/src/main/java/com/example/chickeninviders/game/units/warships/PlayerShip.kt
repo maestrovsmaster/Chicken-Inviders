@@ -57,11 +57,19 @@ class PlayerShip(
         }
     }
 
-    fun enableGuardSphere() {
+    /**
+     *return true if guard sphere was enabled
+     */
+    fun enableGuardSphere(): Boolean {
         if(guardSphere == null) {
             Log.d("PlayerShip", "enableGuardSphere")
-            guardSphere = SafeSphere(this.position.copy(coord3D = this.position.coord3D.copy(x = this.position.coord3D.x + size.width/2, y = this.position.coord3D.y + size.height/2)))
+            guardSphere = SafeSphere(this.position.copy(coord3D = this.position.coord3D.copy(x = this.position.coord3D.x + size.width/2, y = this.position.coord3D.y + size.height/2))){
+                Log.d("PlayerShip", "disableGuardSphere")
+                disableGuardSphere()
+            }
+            return true
         }
+        return false
     }
 
     fun disableGuardSphere() {
