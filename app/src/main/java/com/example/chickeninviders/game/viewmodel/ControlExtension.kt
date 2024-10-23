@@ -24,6 +24,18 @@ internal fun MainViewModel.moveMySheepLeft() {
     }
 }
 
+internal fun MainViewModel.enableGuardSphereForMySheep() {
+    getMyStarShip()?.let { myStarship ->
+        myStarship.enableGuardSphere()
+    }
+}
+
+internal fun MainViewModel.disableGuardSphereForMySheep() {
+    getMyStarShip()?.let { myStarship ->
+        myStarship.disableGuardSphere()
+    }
+}
+
 
 internal fun MainViewModel.getMyStarShip(): PlayerShip? {
     spaceObjects.value?.forEach { obj ->

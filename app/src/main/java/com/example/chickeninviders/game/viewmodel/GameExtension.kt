@@ -8,6 +8,7 @@ import com.example.chickeninviders.game.units.bullets.Bullet
 import com.example.chickeninviders.game.units.flame.BangType
 import com.example.chickeninviders.game.units.artifacts.AmmoParcel
 import com.example.chickeninviders.game.units.artifacts.LifeParcel
+import com.example.chickeninviders.game.units.artifacts.ShieldParcel
 import com.example.chickeninviders.game.units.warships.EvilChicken
 import sortCollisions
 
@@ -96,6 +97,15 @@ internal fun MainViewModel.checkForCollisions() {
                 }
             }
 
+            CollisionType.CollisionWithSafeGuard -> {
+                if (it.first is ArtificialObject) {
+                    bangsForAdd.add(it.first.bang(BangType.Salut))
+                }
+                if (it.second is ArtificialObject) {
+                    bangsForAdd.add(it.second.bang(BangType.Salut))
+                }
+            }
+
             CollisionType.ParcelAmmo -> {
                 val newValue = _ammo.value!! + 10
                 _ammo.postValue(newValue)
@@ -113,6 +123,16 @@ internal fun MainViewModel.checkForCollisions() {
                     bangsForAdd.add(it.first.bang(BangType.Salut))
                 }
                 if (it.second is LifeParcel) {
+                    bangsForAdd.add(it.second.bang(BangType.Salut))
+                }
+            }
+
+            CollisionType.ParcelShield -> {
+                addShield()
+                if (it.first is ShieldParcel) {
+                    bangsForAdd.add(it.first.bang(BangType.Salut))
+                }
+                if (it.second is ShieldParcel) {
                     bangsForAdd.add(it.second.bang(BangType.Salut))
                 }
             }

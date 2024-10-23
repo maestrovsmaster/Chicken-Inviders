@@ -1,11 +1,15 @@
 package com.example.chickeninviders.game.viewmodel
 
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.chickeninviders.GLOBAL_TIMER_DELAY
 import com.example.chickeninviders.MAX_LIFES
+import com.example.chickeninviders.MAX_SHIELDS
 import com.example.chickeninviders.PLAYER_WEAPON_RELOAD_TIME
+import com.example.chickeninviders.SHIELD_ACTIVE_TIME
 import com.example.chickeninviders.game.camera.MainCamera
 import com.example.chickeninviders.game.gameplay.TimerHandler
 import com.example.chickeninviders.game.physic.PhysicEntity
@@ -54,6 +58,9 @@ class MainViewModel : ViewModel() {
     internal val _lifes = MutableLiveData<Int>(MAX_LIFES)
     val lifes: LiveData<Int> = _lifes
 
+    internal val _shields = MutableLiveData<Int>(1)
+    val shields: LiveData<Int> = _shields
+
 
     private val _clickRight = MutableLiveData(false)
     val clickRight: LiveData<Boolean> = _clickRight
@@ -86,6 +93,8 @@ class MainViewModel : ViewModel() {
         }
 
     }
+
+
 
     private fun prepareShot() {
         var newValue = _ammo.value!! - 1

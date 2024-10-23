@@ -5,7 +5,8 @@ enum class CollisionType {
     Collision,
     ParcelAmmo,
     ParcelMedicine,
-    ParcelArmor,
+    ParcelShield,
     Target,
     Accident,
+    CollisionWithSafeGuard
 }

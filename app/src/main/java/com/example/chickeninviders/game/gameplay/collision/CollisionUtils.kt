@@ -4,8 +4,7 @@ import com.example.chickeninviders.game.gameplay.collision.CollisionType
 import com.example.chickeninviders.game.gameplay.collision.checkAccidentCollision
 import com.example.chickeninviders.game.gameplay.collision.checkEnemyCollision
 import com.example.chickeninviders.game.gameplay.collision.checkFriendCollision
-import com.example.chickeninviders.game.gameplay.collision.checkParcelAmmoCollision
-import com.example.chickeninviders.game.gameplay.collision.checkParcelLifeCollision
+import com.example.chickeninviders.game.gameplay.collision.checkParcelsCollision
 import com.example.chickeninviders.game.gameplay.collision.checkTargetCollision
 import com.example.chickeninviders.game.physic.PhysicEntity
 import com.example.chickeninviders.game.units.bullets.Bullet
@@ -85,10 +84,9 @@ fun sortCollisions(objects: List<PhysicEntity>): List<CollisionEvent> {
         checkFriendCollision(collision)?.let {
             events.add(it)
         }
-        checkParcelAmmoCollision(collision)?.let {
-            events.add(it)
-        }
-        checkParcelLifeCollision(collision)?.let {
+
+
+        checkParcelsCollision(collision)?.let {
             events.add(it)
         }
 

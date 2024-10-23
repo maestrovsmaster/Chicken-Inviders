@@ -1,6 +1,6 @@
 package com.example.chickeninviders.game.viewmodel
 
-import com.example.chickeninviders.game.physic.PhysicEntity
+import com.example.chickeninviders.MAX_LIFES
 
 internal fun MainViewModel.removeLife() {
     _lifes.value = _lifes.value!! - 1
@@ -11,7 +11,8 @@ internal fun MainViewModel.removeLife() {
 
 internal fun MainViewModel.addLife() {
     var newVal = _lifes.value!! + 1
-    if(newVal > 3) newVal = 3
+    if(newVal > MAX_LIFES) newVal = MAX_LIFES
     _lifes.value = newVal
 
 }
+

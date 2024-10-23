@@ -1,11 +1,15 @@
 package com.example.chickeninviders.game.units.warships
 
+import android.util.Log
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import com.example.chickeninviders.game.gameplay.SpawnScript
 import com.example.chickeninviders.game.graphics.GameFrame.nearBorder
 import com.example.chickeninviders.game.graphics.ScreenBorder
 import com.example.chickeninviders.game.physic.MovementImpuls
 import com.example.chickeninviders.game.physic.MovementVector
+import com.example.chickeninviders.game.units.artifacts.SafeSphere
 import com.example.chickeninviders.game.units.bullets.Bullet
 import com.example.chickeninviders.game.units.bullets.PlayersBullet
 import com.example.chickeninviders.game.units.flame.Flame
@@ -26,6 +30,10 @@ class PlayerShip(
     var baseImpuls = 20f
 
     lateinit var flame: Flame
+
+    //val sphere = SpawnScript.initTestSphere()
+   // mainViewModel.addSpaceObject(sphere)
+    var guardSphere: SafeSphere? = null
 
 
 
@@ -48,6 +56,22 @@ class PlayerShip(
             return Flame(position, MovementVector.BACK, speed = Speed.HIGHT)
         }
     }
+
+    fun enableGuardSphere() {
+        if(guardSphere == null) {
+            Log.d("PlayerShip", "enableGuardSphere")
+            guardSphere = SafeSphere(this.position.copy(coord3D = this.position.coord3D.copy(x = this.position.coord3D.x + size.width/2, y = this.position.coord3D.y + size.height/2)))
+        }
+    }
+
+    fun disableGuardSphere() {
+        guardSphere = null
+    }
+
+    fun hasGuardSphere(): Boolean {
+        return guardSphere != null
+    }
+
 
 
 
@@ -76,6 +100,9 @@ class PlayerShip(
         flame.position.speed3D = newSpeed
 
         flame.position.coord3D.x = position.coord3D.x+size.width/2f - 5
+
+        guardSphere?.position?.speed3D = newSpeed
+        guardSphere?.position?.coord3D?.x = position.coord3D.x+size.width/2f - 5
     }
 
     override fun update() {
@@ -91,6 +118,14 @@ class PlayerShip(
         this.move()
         flame.update()
 
+        guardSphere?.update()
+
+
+    }
+
+    override fun draw(drawScope: DrawScope, cameraOffset: Coord3D) {
+        super.draw(drawScope, cameraOffset)
+        guardSphere?.draw(drawScope, cameraOffset)
     }
 
 

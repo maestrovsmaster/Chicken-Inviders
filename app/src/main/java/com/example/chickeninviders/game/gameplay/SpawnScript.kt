@@ -28,6 +28,7 @@ object SpawnScript {
 
     lateinit var ammoParcelBitmap : ImageBitmap
     lateinit var medicineParcelBitmap : ImageBitmap
+    lateinit var shieldParcelBitmap : ImageBitmap
 
     @Composable
     fun init(){
@@ -37,6 +38,7 @@ object SpawnScript {
         eggBitmap = ImageBitmap.imageResource(id = R.drawable.ic_egg)
         ammoParcelBitmap = ImageBitmap.imageResource(id = R.drawable.ic_box_ammo_10)
         medicineParcelBitmap = ImageBitmap.imageResource(id = R.drawable.ic_box_medicine_10)
+        shieldParcelBitmap = ImageBitmap.imageResource(id = R.drawable.ic_box_shield)
     }
 
 

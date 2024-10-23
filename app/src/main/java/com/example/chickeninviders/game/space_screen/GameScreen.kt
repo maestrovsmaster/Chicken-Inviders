@@ -21,17 +21,16 @@ import androidx.compose.ui.unit.dp
 import com.example.chickeninviders.game.space_screen.widgets.AmmoDisplay
 import com.example.chickeninviders.game.space_screen.widgets.GameOverDialog
 import com.example.chickeninviders.game.space_screen.widgets.LifeDisplay
+import com.example.chickeninviders.game.space_screen.widgets.SafeShieldDisplay
 import com.example.chickeninviders.game.space_screen.widgets.Tooltip
 import com.example.chickeninviders.game.space_screen.widgets.TooltipWidget
 import com.example.chickeninviders.game.viewmodel.MainViewModel
+import com.example.chickeninviders.game.viewmodel.activateShield
 import kotlinx.coroutines.delay
 
 
 @Composable
 fun GameScreen(mainViewModel: MainViewModel) {
-
-
-
 
 
 
@@ -50,9 +49,16 @@ fun GameScreen(mainViewModel: MainViewModel) {
 
             TooltipWidget()
 
+            SafeShieldDisplay(mainViewModel.shields, modifier = Modifier.align(Alignment.BottomStart).padding(bottom = 60.dp, start = 20.dp),
+                onClick = {
+                    mainViewModel.activateShield()
+                })
+
             /*GameOverDialog(mainViewModel.lifes,{
                 System.exit(0)
             })*/
+
+
 
         }
 

@@ -80,6 +80,8 @@ class SafeSphere(
 
     override fun draw(drawScope: DrawScope, cameraOffset: Coord3D) {
 
+        Log.d("PlayerShip", " SafeSphere draw")
+
         val transformedCoords = this.transformOffset(cameraOffset)
         val coord2D =  transformPerspective(transformedCoords)
         dots.map { dot ->

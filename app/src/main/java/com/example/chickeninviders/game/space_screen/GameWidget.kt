@@ -64,7 +64,7 @@ fun GameWidget(mainViewModel: MainViewModel){
   //  mainViewModel.addSpaceObject(flame)
 
 
-   // val sphere = SpawnScript.initTestSphere()
+    val sphere = SpawnScript.initTestSphere()
    // mainViewModel.addSpaceObject(sphere)
 
     mainViewModel.startTimer()
@@ -93,7 +93,7 @@ private fun initMySpace(): PhysicEntity {
 private fun createStars(): MutableList<PhysicEntity> {
     val list = mutableListOf<PhysicEntity>()
     for (i in 0 .. 400){
-        list.add(Star.create() as CelestialBody)
+        list.add(Star.create() )
     }
     list.sortByDescending { it.position.coord3D.z }
     return list
