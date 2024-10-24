@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         return when (keyCode) {
             KeyEvent.KEYCODE_DPAD_UP -> {
-                // Дії для натискання вгору
+                mainViewModel.clickFire()
                 true
             }
             KeyEvent.KEYCODE_DPAD_DOWN -> {
@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
                 true
             }
             KeyEvent.KEYCODE_DPAD_CENTER -> {
-                mainViewModel.clickFire()
+
                 true
             }
             else -> super.onKeyDown(keyCode, event)
